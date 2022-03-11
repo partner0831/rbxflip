@@ -1,5 +1,5 @@
 import React from "react";
-
+import { StyledSidebar } from "./style";
 export default function Sidebar() {
-  return <div>Sidebar</div>;
+  return <StyledSidebar>Sidebar</StyledSidebar>;
 }

@@ -1,5 +1,12 @@
 import React from "react";
-import { StyledSidebar } from "./style";
+import { LogImg, LogoContainer, StyledSidebar } from "./style";
+import logo from "../../assets/img/image.png";
 export default function Sidebar() {
-  return <StyledSidebar>Sidebar</StyledSidebar>;
+  return (
+    <StyledSidebar>
+      <LogoContainer>
+        <LogImg src={logo} />
+      </LogoContainer>
+    </StyledSidebar>
+  );
 }

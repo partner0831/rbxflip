@@ -2,19 +2,21 @@ import React from "react";
 import Sidebar from "../Sidebar";
 import Navbar from "../Navbar";
 import Footer from "../Footer";
-import { LayoutContainer, MainContainer } from "./style";
+import { LayoutContainer, MainContainer, MainLayout, StyledApp } from "./style";
 const AppLayout = (props) => {
   return (
-    <div>
+    <StyledApp>
       <LayoutContainer>
         <Sidebar />
-        <MainContainer>
+        <MainLayout>
           <Navbar />
-          {props.children}
-          <Footer />
-        </MainContainer>
+          <MainContainer>
+            {props.children}
+            <Footer />
+          </MainContainer>
+        </MainLayout>
       </LayoutContainer>
-    </div>
+    </StyledApp>
   );
 };
 export default AppLayout;

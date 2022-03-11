@@ -2,7 +2,7 @@ import styled from "styled-components";
 export const StyledSidebar = styled.div`
   width: 290px;
   background-color: #2c2d46;
-  height: 100vh;
+  min-height: 100vh;
 `;
 export const LogoContainer = styled.div`
   display: flex;

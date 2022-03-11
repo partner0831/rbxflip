@@ -5,6 +5,7 @@ export const StyledNavbar = styled.div`
   background-color: #191b2d;
   display: flex;
   align-items: center;
+  padding: 0 53px;
 `;
 export const NavbarContainer = styled.div`
   width: 100%;

@@ -12,6 +12,6 @@ export const MainLayout = styled.div`
   width: calc(100% - 290px);
 `;
 export const MainContainer = styled.div`
-  padding: 0 53px 53px;
+  padding: 0 53px;
   background-color: #1d1f32;
 `;

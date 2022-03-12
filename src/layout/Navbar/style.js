@@ -29,4 +29,10 @@ export const SocialView = styled.div`
     margin: 0 35px 0 0;
   }
 `;
-export const SocialItem = styled.div``;
+export const SocialItem = styled.div`
+  display: flex;
+  align-items: center;
+  & > *:not(:last-child) {
+    margin: 0 5px 0 0;
+  }
+`;

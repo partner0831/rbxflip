@@ -19,7 +19,7 @@ import {
   SubActionGroup,
   SubActionIcon,
   SubActionTitle,
-  SubSignin,
+  // SubSignin,
   ValueView,
 } from "./style";
 
@@ -45,7 +45,7 @@ const Dashboard = () => {
             <SubActionTitle>Claims</SubActionTitle>
           </SubAction>
         </SubActionGroup>
-        <SubSignin>Sign in</SubSignin>
+        {/* <SubSignin>Sign in</SubSignin> */}
       </StyledSubNav>
       <StyledDashboard>
         <DashboardContainer>

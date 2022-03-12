@@ -8,6 +8,7 @@ import {
   TermText,
   TermView,
 } from "./style";
+import { FaDiscord, FaTwitterSquare } from "react-icons/fa";
 export default function Navbar() {
   return (
     <StyledNavbar>
@@ -32,9 +33,11 @@ export default function Navbar() {
         </TermContainer>
         <SocialView>
           <SocialItem>
+            <FaDiscord size="25" />
             <TermText>Discord</TermText>
           </SocialItem>
           <SocialItem>
+            <FaTwitterSquare size="20" />
             <TermText>Twitter</TermText>
           </SocialItem>
         </SocialView>

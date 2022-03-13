@@ -178,6 +178,10 @@ export const CountDesc = styled.span`
   font-weight: 700;
 `;
 //-------------------------------------------------------
+export const CreateView = styled.div`
+  height: 300px;
+  overflow-y: scroll;
+`;
 export const StyledRoom = styled.div`
   transform: translateX(0);
   opacity: 1;

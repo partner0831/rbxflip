@@ -10,7 +10,6 @@ export const StyledDashboard = styled.div`
   display: flex;
   width: 100%;
   flex: 1 1;
-  min-height: 500px;
 `;
 export const DashboardContainer = styled.div`
   display: flex;
@@ -28,6 +27,12 @@ export const DashHeader = styled.div`
   width: 100%;
   margin-bottom: 20px;
   flex-shrink: 0;
+  @media (max-width: 768px) {
+    flex-direction: column;
+    & > *:not(:last-child) {
+      margin-bottom: 15px;
+    }
+  }
 `;
 export const ValueView = styled.div`
   background: #3185ff;
@@ -38,6 +43,9 @@ export const ValueView = styled.div`
   border-radius: 17px;
   display: flex;
   flex-direction: column;
+  @media (max-width: 768px) {
+    margin-right: 0px;
+  }
 `;
 export const GameView = styled.div`
   background: #f89e1b;
@@ -48,6 +56,9 @@ export const GameView = styled.div`
   border-radius: 17px;
   display: flex;
   flex-direction: column;
+  @media (max-width: 768px) {
+    margin-right: 0px;
+  }
 `;
 export const HistoryView = styled.div`
   display: flex;
@@ -79,8 +90,27 @@ export const CreateAction = styled.div`
   font-size: 16px;
   font-weight: 700;
   color: white;
+  max-width: 80px;
 `;
-
+export const CloseAction = styled.div`
+  background: red;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50px;
+  padding: 10px 25px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 700;
+  color: white;
+  max-width: 80px;
+`;
+export const ModalBtnView = styled.div`
+  display: flex;
+  & > *:not(:last-child) {
+    margin-right: 15px;
+  }
+`;
 export const CountText = styled.span`
   color: white;
   font-size: 20px;
@@ -94,7 +124,7 @@ export const CountDesc = styled.span`
 `;
 //-------------------------------------------------------
 export const CreateView = styled.div`
-  height: 300px;
+  max-height: 300px;
   overflow-y: auto;
 `;
 export const StyledRoom = styled.div`

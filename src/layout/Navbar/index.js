@@ -17,7 +17,7 @@ export default function Navbar() {
           <TermView>
             <TermText>Provably Fair</TermText>
           </TermView>
-          <TermView>
+          {/* <TermView>
             <TermText>Terms Of Service</TermText>
           </TermView>
           <TermView>
@@ -29,7 +29,7 @@ export default function Navbar() {
           <TermView>
             <TermText>Stats</TermText>
           </TermView>
-          <TermView></TermView>
+          <TermView></TermView> */}
         </TermContainer>
         <SocialView>
           <SocialItem>

@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  SidebarContainer,
   ConnectButton,
   ConnectText,
   ConnectView,
@@ -14,7 +15,7 @@ import { ToastContainer } from "react-toastify";
 
 // @import style
 import "react-toastify/dist/ReactToastify.css";
-export default function Sidebar() {
+export default function Sidebar({ isOpened, isMobile }) {
   const { currentAcc, provider } = useEthContext();
   const handleConnectWallet = async () => {
     // if (Number(window.ethereum.chainId) === 1) {
@@ -23,8 +24,9 @@ export default function Sidebar() {
     //   toast.error("Please connect to mainnet", { theme: "dark" });
     // }
   };
+  console.log(isOpened, isMobile);
   return (
-    <>
+    <SidebarContainer isOpened={isOpened} isMobile={isMobile}>
       <ToastContainer />
       <StyledSidebar>
         <LogoContainer>
@@ -41,6 +43,6 @@ export default function Sidebar() {
           </ConnectButton>
         </ConnectView>
       </StyledSidebar>
-    </>
+    </SidebarContainer>
   );
 }

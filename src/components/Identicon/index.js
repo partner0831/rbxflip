@@ -17,5 +17,5 @@ export default function Identicon({ address, size }) {
     }
   }, [address, size]);
 
-  return <StyledIdenticon ref={ref} size={size} />;
+  return <StyledIdenticon ref={ref} />;
 }

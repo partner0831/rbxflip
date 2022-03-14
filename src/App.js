@@ -5,18 +5,25 @@ import AppLayout from "./layout/AppLayout";
 // @import wallet connection
 import Web3 from "web3";
 import { EthereumContext } from "./context/EthereumContext";
+import { SocketContext } from "./context/SocketContext";
+
+// @import constant
+import { SERVER_URL } from "./contract/server_url";
+import io from "socket.io-client";
 // @import CSS
 import AOS from "aos";
 import "aos/dist/aos.css";
 import "./App.css";
+
 // @import pages
-const MintPage = React.lazy(() => import("./pages/Mint"));
+const RoomPage = React.lazy(() => import("./pages/Room"));
 
 function App() {
-  const [provider, setProvider] = useState(null);
   const [web3, setWeb3] = useState(null);
+  const [provider, setProvider] = useState(null);
   const [accounts, setAccounts] = useState([]);
   const [currentAcc, setCurrentAcc] = useState("");
+  const [socket, setSocket] = useState();
   useEffect(() => {
     if (window.ethereum) {
       handleEthereum();
@@ -58,7 +65,14 @@ function App() {
       window.alert("Please install Metamask");
     }
   };
-
+  useEffect(() => {
+    if (currentAcc) {
+      var socketInfo = io(`${SERVER_URL}?userId=${currentAcc}`, {
+        transports: ["websocket"],
+      });
+      setSocket(socketInfo);
+    }
+  }, [currentAcc]);
   return (
     <EthereumContext.Provider
       value={{
@@ -68,18 +82,24 @@ function App() {
         currentAcc,
       }}
     >
-      <Suspense fallback={<div />}>
-        <Router>
-          <Switch>
-            {/* Dashboard */}
-            <Route exact path="/">
-              <AppLayout>
-                <MintPage />
-              </AppLayout>
-            </Route>
-          </Switch>
-        </Router>
-      </Suspense>
+      <SocketContext.Provider
+        value={{
+          socket,
+        }}
+      >
+        <Suspense fallback={<div />}>
+          <Router>
+            <Switch>
+              {/* Dashboard */}
+              <Route exact path="/">
+                <AppLayout>
+                  <RoomPage />
+                </AppLayout>
+              </Route>
+            </Switch>
+          </Router>
+        </Suspense>
+      </SocketContext.Provider>
     </EthereumContext.Provider>
   );
 }

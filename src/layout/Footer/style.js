@@ -5,6 +5,9 @@ export const StyledFooter = styled.div`
   align-items: center;
   position: fixed;
   bottom: 0px;
+  @media (max-width: 1000px) {
+    position: relative;
+  }
 `;
 export const FooterText = styled.div`
   max-width: 80%;

@@ -1,4 +1,7 @@
 import styled from "styled-components";
+export const SidebarContainer = styled.div`
+  display: ${(props) => (props.isMobile ? "none" : "block")};
+`;
 export const StyledSidebar = styled.div`
   width: 290px;
   background-color: #2c2d46;

@@ -1,6 +1,7 @@
 import React from "react";
 import Sidebar from "../Sidebar";
 import Navbar from "../Navbar";
+import SubNavbar from "../SubNavbar";
 import Footer from "../Footer";
 import { LayoutContainer, MainContainer, MainLayout, StyledApp } from "./style";
 const AppLayout = (props) => {
@@ -10,6 +11,7 @@ const AppLayout = (props) => {
         <Sidebar />
         <MainLayout>
           <Navbar />
+          <SubNavbar />
           <MainContainer>
             {props.children}
             <Footer />

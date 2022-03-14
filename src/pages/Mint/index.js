@@ -25,11 +25,6 @@ import {
   RoomUserVs,
   StyledDashboard,
   StyledRoom,
-  StyledSubNav,
-  SubAction,
-  SubActionGroup,
-  SubActionIcon,
-  SubActionTitle,
   // SubSignin,
   ValueView,
 } from "./style";
@@ -44,27 +39,6 @@ const Dashboard = () => {
   const { currentAcc } = useEthContext();
   return (
     <DashboardWrapper>
-      <StyledSubNav>
-        <SubActionGroup>
-          <SubAction>
-            <SubActionIcon></SubActionIcon>
-            <SubActionTitle>Coinflip</SubActionTitle>
-          </SubAction>
-          <SubAction>
-            <SubActionIcon></SubActionIcon>
-            <SubActionTitle>Jackpot</SubActionTitle>
-          </SubAction>
-          <SubAction>
-            <SubActionIcon></SubActionIcon>
-            <SubActionTitle>Rock Paper Scissors</SubActionTitle>
-          </SubAction>
-          <SubAction>
-            <SubActionIcon></SubActionIcon>
-            <SubActionTitle>Claims</SubActionTitle>
-          </SubAction>
-        </SubActionGroup>
-        {currentAcc && <Identicon address={currentAcc} size={2.5} />}
-      </StyledSubNav>
       <StyledDashboard>
         <DashboardContainer>
           <DashHeader>

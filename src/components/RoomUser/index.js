@@ -1,6 +1,5 @@
 import {
   RoomUserContainer,
-  RoomUserImage,
   RoomUserMark,
   RoomUserMarkBack,
   RoomUserMarkBackImage,
@@ -15,7 +14,7 @@ const RoomUser = (props) => {
   return (
     <RoomUserWrapper>
       <RoomUserContainer>
-        <RoomUserImage src={props.avatar} />
+        {props.children}
         <RoomUserMark>
           <RoomUserMarkContainer>
             <RoomUserMarkBack>

@@ -101,46 +101,12 @@ export const HistoryView = styled.div`
   border-radius: 17px;
   flex: 0.5 1;
 `;
-export const HistoryStatus = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-export const HistoryText = styled.span`
-  font-weight: 700;
-  font-size: 14px;
-  color: ${(props) => props.fontColor};
-  margin-right: 10px;
-`;
-export const HistoryAvatar = styled.span`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 700;
-  width: 27px;
-  height: 27px;
-  border-radius: 50%;
-  color: ${(props) => props.fontColor};
-  background: ${(props) => props.bgColor};
-  margin-right: 10px;
-`;
 
 export const HistoryActions = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-`;
-
-export const HistoryAction = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50px;
-  padding: 6px 25px;
-  cursor: pointer;
-  font-size: 16px;
-  font-weight: 700;
-  color: #9c9ebb;
+  width: 100%;
 `;
 
 export const CreateAction = styled.div`
@@ -149,7 +115,7 @@ export const CreateAction = styled.div`
   align-items: center;
   justify-content: center;
   border-radius: 50px;
-  padding: 6px 25px;
+  padding: 10px 25px;
   cursor: pointer;
   font-size: 16px;
   font-weight: 700;
@@ -170,7 +136,7 @@ export const CountDesc = styled.span`
 //-------------------------------------------------------
 export const CreateView = styled.div`
   height: 300px;
-  overflow-y: scroll;
+  overflow-y: auto;
 `;
 export const StyledRoom = styled.div`
   transform: translateX(0);

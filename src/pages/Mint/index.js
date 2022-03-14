@@ -9,11 +9,7 @@ import {
   DashboardWrapper,
   DashHeader,
   GameView,
-  HistoryAction,
   HistoryActions,
-  HistoryAvatar,
-  HistoryStatus,
-  HistoryText,
   HistoryView,
   RoomButtonJoinContent,
   RoomButtons,
@@ -37,13 +33,11 @@ import {
   // SubSignin,
   ValueView,
 } from "./style";
-
-import user1 from "../../assets/img/user1.png";
-import user2 from "../../assets/img/user2.png";
 import mark1 from "../../assets/img/mark1.png";
 import mark2 from "../../assets/img/mark2.png";
 import bigback from "../../assets/img/bigback.svg";
 import bigmark1 from "../../assets/img/bigmark1.png";
+import bigmark2 from "../../assets/img/bigmark2.png";
 import { useEthContext } from "../../context/EthereumContext";
 import Identicon from "../../components/Identicon";
 const Dashboard = () => {
@@ -69,49 +63,45 @@ const Dashboard = () => {
             <SubActionTitle>Claims</SubActionTitle>
           </SubAction>
         </SubActionGroup>
-        {currentAcc ? (
-          <Identicon address={currentAcc} />
-        ) : (
-          "Connect your wallet."
-        )}
+        {currentAcc && <Identicon address={currentAcc} size={2.5} />}
       </StyledSubNav>
       <StyledDashboard>
         <DashboardContainer>
           <DashHeader>
             <ValueView>
-              <CountText>0</CountText>
-              <CountDesc>Value</CountDesc>
+              <CountText>200</CountText>
+              <CountDesc>Online Users</CountDesc>
             </ValueView>
             <GameView>
-              <CountText>0</CountText>
-              <CountDesc>Games</CountDesc>
+              <CountText>1.25k</CountText>
+              <CountDesc>Total Users</CountDesc>
             </GameView>
             <HistoryView>
-              <HistoryStatus>
-                <HistoryText>PAST100</HistoryText>
-                <HistoryAvatar bgColor="#74d878" fontColor="#317534">
-                  R
-                </HistoryAvatar>
-                <HistoryText fontColor="white">53</HistoryText>
-                <HistoryAvatar bgColor="#f89e1b" fontColor="#97641b">
-                  T
-                </HistoryAvatar>
-                <HistoryText fontColor="white">47</HistoryText>
-              </HistoryStatus>
               <HistoryActions>
-                <HistoryAction>History</HistoryAction>
-                {currentAcc ? <CreateAction>Create</CreateAction> : ""}
+                {currentAcc ? (
+                  <CreateAction>Create</CreateAction>
+                ) : (
+                  "After connect wallet you can create the room."
+                )}
               </HistoryActions>
             </HistoryView>
           </DashHeader>
           <CreateView>
             <StyledRoom>
               <RoomUsers>
-                <RoomUser avatar={user1} mark={mark1} />
+                <RoomUser mark={mark1}>
+                  <Identicon address={currentAcc} size={4.5} />
+                </RoomUser>
+
                 <RoomUserVs>
                   <p>{"VS"}</p>
                 </RoomUserVs>
-                <RoomUser avatar={user2} mark={mark2} />
+                <RoomUser mark={mark2}>
+                  <Identicon
+                    address={"0x17b546D3179ca33b542eD6BD9fE6656fb5D5b70E"}
+                    size={4.5}
+                  />
+                </RoomUser>
               </RoomUsers>
               <RoomCountDownContainer>
                 <RoomCountDown>
@@ -135,44 +125,23 @@ const Dashboard = () => {
             </StyledRoom>
             <StyledRoom>
               <RoomUsers>
-                <RoomUser avatar={user1} mark={mark1} />
+                <RoomUser mark={mark2}>
+                  <Identicon
+                    address={"0x17b546D3179ca33b542eD6BD9fE6656fb5D5b70E"}
+                    size={4.5}
+                  />
+                </RoomUser>
                 <RoomUserVs>
                   <p>{"VS"}</p>
                 </RoomUserVs>
-                <RoomUser avatar={user2} mark={mark2} />
+                <RoomUser mark={mark1}>
+                  <Identicon address={currentAcc} size={4.5} />
+                </RoomUser>
               </RoomUsers>
               <RoomCountDownContainer>
                 <RoomCountDown>
                   <RoomCountDownBack>
-                    <RoomCountDownBackImage src={bigmark1} />
-                  </RoomCountDownBack>
-                  <RoomCountDownImage src={bigback} />
-                </RoomCountDown>
-              </RoomCountDownContainer>
-
-              <RoomControls>
-                <RoomControlsTitle>
-                  {"5"} ETH~{"6"} ETH
-                </RoomControlsTitle>
-              </RoomControls>
-              <RoomButtons>
-                <RoomJoinButton>
-                  <RoomButtonJoinContent>Join</RoomButtonJoinContent>
-                </RoomJoinButton>
-              </RoomButtons>
-            </StyledRoom>
-            <StyledRoom>
-              <RoomUsers>
-                <RoomUser avatar={user1} mark={mark1} />
-                <RoomUserVs>
-                  <p>{"VS"}</p>
-                </RoomUserVs>
-                <RoomUser avatar={user2} mark={mark2} />
-              </RoomUsers>
-              <RoomCountDownContainer>
-                <RoomCountDown>
-                  <RoomCountDownBack>
-                    <RoomCountDownBackImage src={bigmark1} />
+                    <RoomCountDownBackImage src={bigmark2} />
                   </RoomCountDownBack>
                   <RoomCountDownImage src={bigback} />
                 </RoomCountDown>

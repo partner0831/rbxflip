@@ -1,4 +1,4 @@
-export const contract_abi = [
+export const contract721ABI = [
   { inputs: [], stateMutability: "nonpayable", type: "constructor" },
   {
     anonymous: false,
@@ -104,6 +104,13 @@ export const contract_abi = [
     type: "function",
   },
   {
+    inputs: [],
+    name: "getRestSupply",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
     inputs: [
       { internalType: "address", name: "owner", type: "address" },
       { internalType: "address", name: "operator", type: "address" },
@@ -115,7 +122,7 @@ export const contract_abi = [
   },
   {
     inputs: [{ internalType: "uint256", name: "_count", type: "uint256" }],
-    name: "mintItem",
+    name: "mintNFT",
     outputs: [],
     stateMutability: "payable",
     type: "function",
@@ -124,13 +131,6 @@ export const contract_abi = [
     inputs: [],
     name: "name",
     outputs: [{ internalType: "string", name: "", type: "string" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [{ internalType: "address", name: "", type: "address" }],
-    name: "ownWallet",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
     stateMutability: "view",
     type: "function",
   },
@@ -206,13 +206,6 @@ export const contract_abi = [
     inputs: [{ internalType: "uint256", name: "tokenId", type: "uint256" }],
     name: "tokenURI",
     outputs: [{ internalType: "string", name: "", type: "string" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "totalSupply",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
     stateMutability: "view",
     type: "function",
   },

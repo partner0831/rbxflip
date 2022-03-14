@@ -47,16 +47,6 @@ export const SubAction = styled.a`
   }
 `;
 
-export const SubSignin = styled.a`
-  font-weight: 700;
-  margin: 0;
-  cursor: pointer;
-  &:hover {
-    color: #3185ff;
-  }
-  text-decoration: none;
-`;
-
 export const StyledDashboard = styled.div`
   display: flex;
   width: 100%;
@@ -255,81 +245,6 @@ export const RoomCountDownImage = styled.img`
   max-height: 100%;
 `;
 
-//------------------------------------------------------------
-
-export const RoomItemsContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  min-width: 225px;
-`;
-
-export const RoomItems = styled.div`
-  display: flex;
-  & > :first-child {
-    margin-left: 0;
-  }
-`;
-
-export const RoomItemContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  margin-left: -33px;
-  width: 65px;
-  height: 65px;
-  border-radius: 50px;
-  border: 4px solid #343654;
-  background: #282a40;
-  background-position: 50%;
-  background-size: cover;
-`;
-
-export const RoomItem = styled.div`
-  width: 100%;
-`;
-
-export const RoomItemDiv = styled.div`
-  display: inline-block;
-  max-width: 100%;
-  overflow: hidden;
-  position: relative;
-  box-sizing: border-box;
-  margin: 0px;
-  width: 100%;
-`;
-export const RoomItemBack = styled.div`
-  box-sizing: border-box;
-  display: block;
-  max-width: 100%;
-`;
-
-export const RoomItemBackImage = styled.img`
-  max-width: 100%;
-  display: block;
-  margin: 0px;
-  border: none;
-  padding: 0px;
-`;
-
-export const RoomItemImage = styled.img`
-  position: absolute;
-  inset: 0px;
-  box-sizing: border-box;
-  padding: 0px;
-  border: none;
-  margin: auto;
-  display: block;
-  width: 0px;
-  height: 0px;
-  min-width: 100%;
-  max-width: 100%;
-  min-height: 100%;
-  max-height: 100%;
-`;
-
 //--------------------------------------------------------------
 
 export const RoomControls = styled.div`
@@ -343,13 +258,6 @@ export const RoomControlsTitle = styled.p`
   font-weight: 700;
   font-size: 16px;
   color: #fff;
-  margin: 0;
-`;
-
-export const RoomControlsSubTitle = styled.p`
-  font-weight: 700;
-  font-size: 14px;
-  color: #9c9ebb;
   margin: 0;
 `;
 
@@ -371,22 +279,6 @@ export const RoomJoinButton = styled.div`
 `;
 
 export const RoomButtonJoinContent = styled.p`
-  font-size: 16px;
-  font-weight: 700;
-  color: #fff;
-  margin: 0;
-`;
-
-export const RoomViewButton = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50px;
-  padding: 6px 25px;
-  cursor: pointer;
-`;
-
-export const RoomButtonViewContent = styled.p`
   font-size: 16px;
   font-weight: 700;
   color: #fff;

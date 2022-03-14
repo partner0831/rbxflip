@@ -17,27 +17,16 @@ import {
   HistoryView,
   RoomButtonJoinContent,
   RoomButtons,
-  RoomButtonViewContent,
   RoomControls,
-  RoomControlsSubTitle,
   RoomControlsTitle,
   RoomCountDown,
   RoomCountDownBack,
   RoomCountDownBackImage,
   RoomCountDownContainer,
   RoomCountDownImage,
-  RoomItem,
-  RoomItemBack,
-  RoomItemBackImage,
-  RoomItemContainer,
-  RoomItemDiv,
-  RoomItemImage,
-  RoomItems,
-  RoomItemsContainer,
   RoomJoinButton,
   RoomUsers,
   RoomUserVs,
-  RoomViewButton,
   StyledDashboard,
   StyledRoom,
   StyledSubNav,
@@ -55,12 +44,10 @@ import mark1 from "../../assets/img/mark1.png";
 import mark2 from "../../assets/img/mark2.png";
 import bigback from "../../assets/img/bigback.svg";
 import bigmark1 from "../../assets/img/bigmark1.png";
-import itemback from "../../assets/img/itemback.svg";
-import angry from "../../assets/img/angry.png";
-import happy from "../../assets/img/happy.png";
-import cap from "../../assets/img/cap.png";
-
+import { useEthContext } from "../../context/EthereumContext";
+import Identicon from "../../components/Identicon";
 const Dashboard = () => {
+  const { currentAcc } = useEthContext();
   return (
     <DashboardWrapper>
       <StyledSubNav>
@@ -82,7 +69,11 @@ const Dashboard = () => {
             <SubActionTitle>Claims</SubActionTitle>
           </SubAction>
         </SubActionGroup>
-        {/* <SubSignin>Sign in</SubSignin> */}
+        {currentAcc ? (
+          <Identicon address={currentAcc} />
+        ) : (
+          "Connect your wallet."
+        )}
       </StyledSubNav>
       <StyledDashboard>
         <DashboardContainer>
@@ -109,7 +100,7 @@ const Dashboard = () => {
               </HistoryStatus>
               <HistoryActions>
                 <HistoryAction>History</HistoryAction>
-                <CreateAction>Create</CreateAction>
+                {currentAcc ? <CreateAction>Create</CreateAction> : ""}
               </HistoryActions>
             </HistoryView>
           </DashHeader>
@@ -130,53 +121,16 @@ const Dashboard = () => {
                   <RoomCountDownImage src={bigback} />
                 </RoomCountDown>
               </RoomCountDownContainer>
-              <RoomItemsContainer>
-                <RoomItems>
-                  <RoomItemContainer>
-                    <RoomItem>
-                      <RoomItemDiv>
-                        <RoomItemBack>
-                          <RoomItemBackImage src={itemback} />
-                        </RoomItemBack>
-                        <RoomItemImage src={happy} />
-                      </RoomItemDiv>
-                    </RoomItem>
-                  </RoomItemContainer>
-                  <RoomItemContainer>
-                    <RoomItem>
-                      <RoomItemDiv>
-                        <RoomItemBack>
-                          <RoomItemBackImage src={itemback} />
-                        </RoomItemBack>
-                        <RoomItemImage src={cap} />
-                      </RoomItemDiv>
-                    </RoomItem>
-                  </RoomItemContainer>
-                  <RoomItemContainer>
-                    <RoomItem>
-                      <RoomItemDiv>
-                        <RoomItemBack>
-                          <RoomItemBackImage src={itemback} />
-                        </RoomItemBack>
-                        <RoomItemImage src={angry} />
-                      </RoomItemDiv>
-                    </RoomItem>
-                  </RoomItemContainer>
-                </RoomItems>
-              </RoomItemsContainer>
+
               <RoomControls>
-                <RoomControlsTitle>{"230k"}</RoomControlsTitle>
-                <RoomControlsSubTitle>
-                  {"R$ 108k - R$ 66k"}
-                </RoomControlsSubTitle>
+                <RoomControlsTitle>
+                  {"5"} ETH~{"6"} ETH
+                </RoomControlsTitle>
               </RoomControls>
               <RoomButtons>
                 <RoomJoinButton>
                   <RoomButtonJoinContent>Join</RoomButtonJoinContent>
                 </RoomJoinButton>
-                <RoomViewButton>
-                  <RoomButtonViewContent>View</RoomButtonViewContent>
-                </RoomViewButton>
               </RoomButtons>
             </StyledRoom>
             <StyledRoom>
@@ -195,53 +149,16 @@ const Dashboard = () => {
                   <RoomCountDownImage src={bigback} />
                 </RoomCountDown>
               </RoomCountDownContainer>
-              <RoomItemsContainer>
-                <RoomItems>
-                  <RoomItemContainer>
-                    <RoomItem>
-                      <RoomItemDiv>
-                        <RoomItemBack>
-                          <RoomItemBackImage src={itemback} />
-                        </RoomItemBack>
-                        <RoomItemImage src={happy} />
-                      </RoomItemDiv>
-                    </RoomItem>
-                  </RoomItemContainer>
-                  <RoomItemContainer>
-                    <RoomItem>
-                      <RoomItemDiv>
-                        <RoomItemBack>
-                          <RoomItemBackImage src={itemback} />
-                        </RoomItemBack>
-                        <RoomItemImage src={cap} />
-                      </RoomItemDiv>
-                    </RoomItem>
-                  </RoomItemContainer>
-                  <RoomItemContainer>
-                    <RoomItem>
-                      <RoomItemDiv>
-                        <RoomItemBack>
-                          <RoomItemBackImage src={itemback} />
-                        </RoomItemBack>
-                        <RoomItemImage src={angry} />
-                      </RoomItemDiv>
-                    </RoomItem>
-                  </RoomItemContainer>
-                </RoomItems>
-              </RoomItemsContainer>
+
               <RoomControls>
-                <RoomControlsTitle>{"230k"}</RoomControlsTitle>
-                <RoomControlsSubTitle>
-                  {"R$ 108k - R$ 66k"}
-                </RoomControlsSubTitle>
+                <RoomControlsTitle>
+                  {"5"} ETH~{"6"} ETH
+                </RoomControlsTitle>
               </RoomControls>
               <RoomButtons>
                 <RoomJoinButton>
                   <RoomButtonJoinContent>Join</RoomButtonJoinContent>
                 </RoomJoinButton>
-                <RoomViewButton>
-                  <RoomButtonViewContent>View</RoomButtonViewContent>
-                </RoomViewButton>
               </RoomButtons>
             </StyledRoom>
             <StyledRoom>
@@ -260,53 +177,16 @@ const Dashboard = () => {
                   <RoomCountDownImage src={bigback} />
                 </RoomCountDown>
               </RoomCountDownContainer>
-              <RoomItemsContainer>
-                <RoomItems>
-                  <RoomItemContainer>
-                    <RoomItem>
-                      <RoomItemDiv>
-                        <RoomItemBack>
-                          <RoomItemBackImage src={itemback} />
-                        </RoomItemBack>
-                        <RoomItemImage src={happy} />
-                      </RoomItemDiv>
-                    </RoomItem>
-                  </RoomItemContainer>
-                  <RoomItemContainer>
-                    <RoomItem>
-                      <RoomItemDiv>
-                        <RoomItemBack>
-                          <RoomItemBackImage src={itemback} />
-                        </RoomItemBack>
-                        <RoomItemImage src={cap} />
-                      </RoomItemDiv>
-                    </RoomItem>
-                  </RoomItemContainer>
-                  <RoomItemContainer>
-                    <RoomItem>
-                      <RoomItemDiv>
-                        <RoomItemBack>
-                          <RoomItemBackImage src={itemback} />
-                        </RoomItemBack>
-                        <RoomItemImage src={angry} />
-                      </RoomItemDiv>
-                    </RoomItem>
-                  </RoomItemContainer>
-                </RoomItems>
-              </RoomItemsContainer>
+
               <RoomControls>
-                <RoomControlsTitle>{"230k"}</RoomControlsTitle>
-                <RoomControlsSubTitle>
-                  {"R$ 108k - R$ 66k"}
-                </RoomControlsSubTitle>
+                <RoomControlsTitle>
+                  {"5"} ETH~{"6"} ETH
+                </RoomControlsTitle>
               </RoomControls>
               <RoomButtons>
                 <RoomJoinButton>
                   <RoomButtonJoinContent>Join</RoomButtonJoinContent>
                 </RoomJoinButton>
-                <RoomViewButton>
-                  <RoomButtonViewContent>View</RoomButtonViewContent>
-                </RoomViewButton>
               </RoomButtons>
             </StyledRoom>
           </CreateView>

@@ -46,14 +46,20 @@ const Dashboard = () => {
   const handleClose = () => setOpen(false);
   useEffect(() => {
     const getCollectionData = async () => {
-      // const { data } = await axios.get(
-      //   `https://api.opensea.io/api/v1/assets?owner=${currentAcc}`
-      // );
       const { data } = await axios.get(
-        `https://api.opensea.io/api/v1/assets?owner=0x97be8adc37c81b32083da0d831f14e31a2a24168`
+        `https://api.opensea.io/api/v1/assets?owner=${currentAcc}`
       );
+      // const { data } = await axios.get(
+      //   `https://api.opensea.io/api/v1/assets?owner=0x97be8adc37c81b32083da0d831f14e31a2a24168`
+      // );
 
-      setNftdata(data.assets);
+      data.assets.map((element) => {
+        if (element.last_sale == null) {
+          element.last_sale = { total_price: 0 };
+        }
+      });
+
+      await setNftdata(data.assets);
     };
     if (currentAcc) {
       getCollectionData();

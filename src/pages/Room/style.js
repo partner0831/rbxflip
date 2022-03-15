@@ -105,8 +105,14 @@ export const CloseAction = styled.div`
   color: white;
   max-width: 80px;
 `;
+export const NFTView = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
 export const ModalBtnView = styled.div`
   display: flex;
+  margin-top: 15px;
   & > *:not(:last-child) {
     margin-right: 15px;
   }

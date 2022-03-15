@@ -1,8 +1,9 @@
-import * as React from "react";
+import React from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
-import { CloseAction, CreateAction, ModalBtnView } from "./style";
+import { CloseAction, CreateAction, ModalBtnView, NFTView } from "./style";
+import { useEthContext } from "../../context/EthereumContext";
 
 const style = {
   position: "absolute",
@@ -18,6 +19,7 @@ const style = {
 };
 
 const ModalContainer = ({ handleClose, open, nftdata }) => {
+  const { currentAcc } = useEthContext();
   return (
     <div>
       <Modal
@@ -30,7 +32,31 @@ const ModalContainer = ({ handleClose, open, nftdata }) => {
           <Typography id="modal-modal-title" variant="h4" component="h2">
             Selete the NFT
           </Typography>
-          {nftdata.length <= 0 ? "You don't have any NFTs" : "asdf"}
+
+          {currentAcc && currentAcc
+            ? nftdata.length > 0
+              ? nftdata
+                  .sort((a, b) => {
+                    if (a.last_sale && b.last_sale) {
+                      return b.last_sale.total_price - a.last_sale.total_price;
+                    }
+                  })
+                  .map((item, key) => (
+                    <NFTView key={key + 1}>
+                      <div>
+                        <input type="checkbox" />
+                        <span>{item.name}</span>
+                      </div>
+                      <span>
+                        {item.last_sale
+                          ? item.last_sale.total_price / 10 ** 18
+                          : 0}{" "}
+                        ETH
+                      </span>
+                    </NFTView>
+                  ))
+              : "You don't have any NFT"
+            : ""}
 
           <ModalBtnView>
             <CreateAction>Create</CreateAction>

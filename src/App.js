@@ -73,6 +73,7 @@ function App() {
       setSocket(socketInfo);
     }
   }, [currentAcc]);
+
   return (
     <EthereumContext.Provider
       value={{

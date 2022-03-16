@@ -18,8 +18,7 @@ export const DashboardContainer = styled.div`
   border-radius: 20px;
   flex: 1 1;
   background: #2c2d46;
-  overflow: auto;
-  overflow-x: hidden;
+  height: 500px;
 `;
 export const DashHeader = styled.div`
   display: flex;
@@ -131,7 +130,7 @@ export const CountDesc = styled.span`
 //-------------------------------------------------------
 export const CreateView = styled.div`
   max-height: 300px;
-  overflow-y: auto;
+  overflow-y: scroll;
 `;
 export const StyledRoom = styled.div`
   transform: translateX(0);

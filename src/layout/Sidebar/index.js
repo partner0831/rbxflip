@@ -24,7 +24,6 @@ export default function Sidebar({ isOpened, isMobile }) {
     //   toast.error("Please connect to mainnet", { theme: "dark" });
     // }
   };
-  console.log(isOpened, isMobile);
   return (
     <SidebarContainer isOpened={isOpened} isMobile={isMobile}>
       <ToastContainer />

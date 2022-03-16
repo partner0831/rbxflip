@@ -4,6 +4,11 @@ export const RoomUserWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  background-color: #1d1f32;
+  border-radius: 100%;
+  height: 4.5rem;
+  width: 4.5rem;
 `;
 
 export const RoomUserContainer = styled.div`

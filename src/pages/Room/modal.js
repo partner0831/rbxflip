@@ -18,7 +18,13 @@ const style = {
   p: 4,
 };
 
-const ModalContainer = ({ handleClose, open, nftdata }) => {
+const ModalContainer = ({
+  handleClose,
+  open,
+  nftdata,
+  onSelectNFT,
+  onCreateNFT,
+}) => {
   const { currentAcc } = useEthContext();
   return (
     <div>
@@ -44,7 +50,12 @@ const ModalContainer = ({ handleClose, open, nftdata }) => {
                   .map((item, key) => (
                     <NFTView key={key + 1}>
                       <div>
-                        <input type="checkbox" />
+                        <input
+                          type="checkbox"
+                          onChange={(e) => {
+                            onSelectNFT(item, e.target.checked);
+                          }}
+                        />
                         <span>{item.name}</span>
                       </div>
                       <span>
@@ -59,7 +70,7 @@ const ModalContainer = ({ handleClose, open, nftdata }) => {
             : ""}
 
           <ModalBtnView>
-            <CreateAction>Create</CreateAction>
+            <CreateAction onClick={onCreateNFT}>Create</CreateAction>
             <CloseAction onClick={handleClose}>Close</CloseAction>
           </ModalBtnView>
         </Box>

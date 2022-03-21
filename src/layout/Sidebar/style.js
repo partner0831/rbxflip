@@ -6,6 +6,8 @@ export const StyledSidebar = styled.div`
   width: 290px;
   background-color: #2c2d46;
   min-height: 100vh;
+  height: 100%;
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -21,6 +23,8 @@ export const LogImg = styled.img`
   height: 63px;
 `;
 export const ConnectView = styled.div`
+  position: sticky;
+  bottom: 0;
   padding: 15px 0;
   display: flex;
   align-items: center;

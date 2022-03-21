@@ -3,8 +3,6 @@ export const StyledFooter = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  position: fixed;
-  bottom: 0px;
   @media (max-width: 1000px) {
     position: relative;
   }

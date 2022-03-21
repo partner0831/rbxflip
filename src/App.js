@@ -42,7 +42,7 @@ function App() {
     const setCurrentlyConnectedAccount = async () => {
       let accounts = await web3.eth.getAccounts();
       if (accounts && accounts.length > 0) {
-        setCurrentAcc(accounts[0]);
+        setCurrentAcc(accounts[0].toLocaleLowerCase());
       }
     };
     if (web3) {
@@ -57,7 +57,7 @@ function App() {
       setProvider(ethereum);
       ethereum.on("accountsChanged", (accs) => {
         setAccounts(accs);
-        setCurrentAcc(accs[0]);
+        setCurrentAcc(accs[0].toLocaleLowerCase());
       });
 
       setWeb3(new Web3(ethereum));

@@ -130,7 +130,7 @@ export const CountDesc = styled.span`
 //-------------------------------------------------------
 export const CreateView = styled.div`
   max-height: 300px;
-  overflow-y: scroll;
+  overflow-y: auto;
 `;
 export const StyledRoom = styled.div`
   transform: translateX(0);
@@ -138,7 +138,8 @@ export const StyledRoom = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: #343654;
+  background: ${(props) => (props.flag ? "#343692" : "#343654")};
+
   box-shadow: 0 3.5px 2px 0 rgb(0 0 0 / 25%);
   padding: 20px 30px;
   width: 100%;
@@ -226,6 +227,8 @@ export const RoomControlsTitle = styled.p`
 export const RoomButtons = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
+  cursor: pointer;
 `;
 
 export const RoomJoinButton = styled.div`
@@ -237,10 +240,58 @@ export const RoomJoinButton = styled.div`
   padding: 6px 25px;
   cursor: pointer;
 `;
-
+export const RoomWaitButton = styled.div`
+  background: #07bc0c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50px;
+  padding: 6px 25px;
+  cursor: pointer;
+`;
+export const RoomStartButton = styled.div`
+  background: #e74c3c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50px;
+  padding: 6px 25px;
+  cursor: pointer;
+`;
+export const RoomApproveButton = styled.button`
+  background: grey;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50px;
+  padding: 6px 25px;
+  cursor: disabled;
+`;
+export const RoomViewButton = styled.div`
+  background: #f89e1b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50px;
+  padding: 6px 25px;
+  cursor: pointer;
+`;
 export const RoomButtonJoinContent = styled.p`
   font-size: 16px;
   font-weight: 700;
   color: #fff;
   margin: 0;
+`;
+export const StatusImg = styled.img`
+  width: 25px;
+  height: 25px;
+`;
+export const StatusView = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  & > *:not(:last-child) {
+    margin-right: 5px;
+  }
 `;

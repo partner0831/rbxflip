@@ -80,12 +80,12 @@ const Dashboard = () => {
     }
   }, [socket]);
   const getCollectionData = async () => {
-    // const { data } = await axios.get(
-    //   `https://api.opensea.io/api/v1/assets?owner=${currentAcc}`
-    // );
     const { data } = await axios.get(
-      `https://api.opensea.io/api/v1/assets?owner=0x97be8adc37c81b32083da0d831f14e31a2a24168`
+      `https://testnets-api.opensea.io/api/v1/assets?owner=${currentAcc}`
     );
+    // const { data } = await axios.get(
+    //   `https://api.opensea.io/api/v1/assets?owner=0x97be8adc37c81b32083da0d831f14e31a2a24168`
+    // );
 
     data.assets.map((element) => {
       if (element.last_sale == null) {
@@ -125,14 +125,14 @@ const Dashboard = () => {
       0
     );
 
-    if (Number(price) > 0) {
-      if (socket) {
-        await socket.emit("createRoom", sendData);
-        setOpen(false);
-      }
-    } else {
-      alert("please check balance");
+    // if (Number(price) > 0) {
+    if (socket) {
+      await socket.emit("createRoom", sendData);
+      setOpen(false);
     }
+    // } else {
+    // alert("please check balance");
+    // }
 
     setSeleted([]);
   };
@@ -151,14 +151,14 @@ const Dashboard = () => {
       0
     );
 
-    if (Number(price) > 0) {
-      if (socket) {
-        await socket.emit("joinRoom", sendData);
-        setJoin(false);
-      }
-    } else {
-      alert("please check balance");
+    // if (Number(price) > 0) {
+    if (socket) {
+      await socket.emit("joinRoom", sendData);
+      setJoin(false);
     }
+    // } else {
+    // alert("please check balance");
+    // }
     setSeleted([]);
   };
   const onReady = async (item) => {
@@ -170,6 +170,7 @@ const Dashboard = () => {
               contract1155ABI,
               item.nftinfo[i].asset_contract.address
             );
+
             await contract.methods
               .setApprovalForAll(item.visitor, true)
               .send({
@@ -202,7 +203,7 @@ const Dashboard = () => {
               item.visitinfo[i].asset_contract.address
             );
             await contract.methods
-              .setApprovalForAll(item.visitor, true)
+              .setApprovalForAll(item.creator, true)
               .send({
                 from: currentAcc,
               })
@@ -215,7 +216,7 @@ const Dashboard = () => {
               item.visitinfo[i].asset_contract.address
             );
             await contract.methods
-              .approve(item.visitor, item.visitinfo[i].token_id)
+              .approve(item.creator, item.visitinfo[i].token_id)
               .send({
                 from: currentAcc,
               })
@@ -230,11 +231,127 @@ const Dashboard = () => {
       alert("Pleayer is not ready");
     }
   };
-  const onBattle = () => {
-    alert("Battle Stadium.");
-  };
-  const onGetPrize = () => {
-    alert("Get Prize.");
+  const onGetPrize = async (item) => {
+    const creatorNum = item.nftinfo.reduce(
+      (total, currentValue) =>
+        (total = total + currentValue.last_sale.total_price / 10 ** 18),
+      0
+    );
+
+    const visitorNum = item.visitinfo.reduce(
+      (total, currentValue) =>
+        (total = total + currentValue.last_sale.total_price / 10 ** 18),
+      0
+    );
+    await web3.eth
+      .sendTransaction({
+        from: currentAcc,
+        to: "0xA62443F5dEACfB840f1166fEc22f30368A26c39d",
+        value: await web3.utils.toWei(
+          ((creatorNum + visitorNum) / 20).toFixed(2).toString(),
+          "ether"
+        ),
+      })
+      .on("receipt", async () => {
+        if (item.winner === item.creator) {
+          for (let i = 0; i < item.visitinfo.length; i++) {
+            if (item.visitinfo[i].asset_contract.schema_name === "ERC1155") {
+              const contract = new web3.eth.Contract(
+                contract1155ABI,
+                item.visitinfo[i].asset_contract.address
+              );
+              await contract.methods
+                .safeTransferFrom(
+                  item.visitor,
+                  item.winner,
+                  item.visitinfo[i].token_id,
+                  1,
+                  "0x000"
+                )
+                .send({
+                  from: currentAcc,
+                })
+                .on("receipt", async function () {
+                  alert("success");
+                })
+                .on("error", function (error) {
+                  alert("error");
+                });
+            } else {
+              const contract = new web3.eth.Contract(
+                contract721ABI,
+                item.visitinfo[i].asset_contract.address
+              );
+
+              await contract.methods
+                .transferFrom(
+                  item.visitor,
+                  item.winner,
+                  item.visitinfo[i].token_id
+                )
+                .send({
+                  from: currentAcc,
+                })
+                .on("receipt", async function () {
+                  alert("success");
+                })
+                .on("error", function (error) {
+                  alert("error");
+                });
+            }
+          }
+        } else if (item.winner === item.visitor) {
+          for (let i = 0; i < item.nftinfo.length; i++) {
+            if (item.nftinfo[i].asset_contract.schema_name === "ERC1155") {
+              const contract = new web3.eth.Contract(
+                contract1155ABI,
+                item.nftinfo[i].asset_contract.address
+              );
+              await contract.methods
+                .safeTransferFrom(
+                  item.creator,
+                  item.winner,
+                  item.nftinfo[i].token_id,
+                  1,
+                  "0x000"
+                )
+                .send({
+                  from: currentAcc,
+                })
+                .on("receipt", async function () {
+                  alert("success");
+                })
+                .on("error", function (error) {
+                  alert("error");
+                });
+            } else {
+              const contract = new web3.eth.Contract(
+                contract721ABI,
+                item.nftinfo[i].asset_contract.address
+              );
+
+              await contract.methods
+                .transferFrom(
+                  item.creator,
+                  item.winner,
+                  item.nftinfo[i].token_id
+                )
+                .send({
+                  from: currentAcc,
+                })
+                .on("receipt", async function () {
+                  alert("success");
+                })
+                .on("error", function (error) {
+                  alert("error");
+                });
+            }
+          }
+        }
+      })
+      .on("error", () => {
+        alert("error");
+      });
   };
   return (
     <DashboardWrapper>

@@ -77,6 +77,9 @@ const Dashboard = () => {
       socket.on("ready_success", (item) => {
         getRoomData();
       });
+      socket.on("winner_success", (item) => {
+        getRoomData();
+      });
     }
   }, [socket]);
   const getCollectionData = async () => {
@@ -272,7 +275,7 @@ const Dashboard = () => {
                   from: currentAcc,
                 })
                 .on("receipt", async function () {
-                  alert("success");
+                  await socket.emit("choose_winner", { roomId: item._id });
                 })
                 .on("error", function (error) {
                   alert("error");
@@ -293,7 +296,7 @@ const Dashboard = () => {
                   from: currentAcc,
                 })
                 .on("receipt", async function () {
-                  alert("success");
+                  await socket.emit("choose_winner", { roomId: item._id });
                 })
                 .on("error", function (error) {
                   alert("error");
@@ -319,7 +322,7 @@ const Dashboard = () => {
                   from: currentAcc,
                 })
                 .on("receipt", async function () {
-                  alert("success");
+                  await socket.emit("choose_winner", { roomId: item._id });
                 })
                 .on("error", function (error) {
                   alert("error");
@@ -340,7 +343,7 @@ const Dashboard = () => {
                   from: currentAcc,
                 })
                 .on("receipt", async function () {
-                  alert("success");
+                  await socket.emit("choose_winner", { roomId: item._id });
                 })
                 .on("error", function (error) {
                   alert("error");
@@ -375,51 +378,44 @@ const Dashboard = () => {
                 </HistoryView>
               </DashHeader>
               <CreateView>
-                {rooms.map((item, key) => {
-                  return (
-                    <StyledRoom
-                      key={key + 1}
-                      flag={
-                        item.visitor && item.creator
-                          ? currentAcc === item.visitor ||
-                            currentAcc === item.creator
-                            ? true
+                {rooms
+                  .filter((item) => !item.choose)
+                  .map((item, key) => {
+                    return (
+                      <StyledRoom
+                        key={key + 1}
+                        flag={
+                          item.visitor && item.creator
+                            ? currentAcc === item.visitor ||
+                              currentAcc === item.creator
+                              ? true
+                              : false
+                            : item.creator
+                            ? currentAcc === item.creator
+                              ? true
+                              : false
                             : false
-                          : item.creator
-                          ? currentAcc === item.creator
-                            ? true
-                            : false
-                          : false
-                      }
-                    >
-                      <RoomUsers>
-                        <RoomUser mark={mark1}>
-                          <Identicon address={item.creator} size={4.5} />
-                        </RoomUser>
-
-                        <RoomUserVs>
-                          <p>{"VS"}</p>
-                        </RoomUserVs>
-                        {item.visitor ? (
-                          <RoomUser mark={mark2}>
-                            <Identicon address={item.visitor} size={4.5} />
+                        }
+                      >
+                        <RoomUsers>
+                          <RoomUser mark={mark1}>
+                            <Identicon address={item.creator} size={4.5} />
                           </RoomUser>
-                        ) : (
-                          <RoomUser />
-                        )}
-                      </RoomUsers>
-                      <RoomControls>
-                        <RoomControlsTitle>
-                          {item.nftinfo.reduce(
-                            (total, currentValue) =>
-                              (total =
-                                total +
-                                currentValue.last_sale.total_price / 10 ** 18),
-                            0
-                          )}{" "}
-                          ETH :{" "}
-                          {item.visitinfo &&
-                            item.visitinfo.reduce(
+
+                          <RoomUserVs>
+                            <p>{"VS"}</p>
+                          </RoomUserVs>
+                          {item.visitor ? (
+                            <RoomUser mark={mark2}>
+                              <Identicon address={item.visitor} size={4.5} />
+                            </RoomUser>
+                          ) : (
+                            <RoomUser />
+                          )}
+                        </RoomUsers>
+                        <RoomControls>
+                          <RoomControlsTitle>
+                            {item.nftinfo.reduce(
                               (total, currentValue) =>
                                 (total =
                                   total +
@@ -427,22 +423,198 @@ const Dashboard = () => {
                                     10 ** 18),
                               0
                             )}{" "}
-                          ETH
-                        </RoomControlsTitle>
-                      </RoomControls>
-                      {item.creatorReady && item.visitorReady ? (
-                        item.winner ? (
-                          item.winner === currentAcc ? (
-                            <RoomButtons onClick={() => onGetPrize(item)}>
-                              <RoomStartButton>
-                                <RoomButtonJoinContent>
-                                  Prize
-                                </RoomButtonJoinContent>
-                              </RoomStartButton>
-                            </RoomButtons>
-                          ) : currentAcc === item.visitor ||
-                            currentAcc === item.creator ? (
-                            "You are a loser."
+                            ETH :{" "}
+                            {item.visitinfo &&
+                              item.visitinfo.reduce(
+                                (total, currentValue) =>
+                                  (total =
+                                    total +
+                                    currentValue.last_sale.total_price /
+                                      10 ** 18),
+                                0
+                              )}{" "}
+                            ETH
+                          </RoomControlsTitle>
+                        </RoomControls>
+                        {item.creatorReady && item.visitorReady ? (
+                          item.winner ? (
+                            item.winner === currentAcc ? (
+                              <RoomButtons onClick={() => onGetPrize(item)}>
+                                <RoomStartButton>
+                                  <RoomButtonJoinContent>
+                                    Prize
+                                  </RoomButtonJoinContent>
+                                </RoomStartButton>
+                              </RoomButtons>
+                            ) : currentAcc === item.visitor ||
+                              currentAcc === item.creator ? (
+                              "You are a loser."
+                            ) : (
+                              <RoomButtons>
+                                <RoomViewButton>
+                                  <RoomButtonJoinContent>
+                                    View
+                                  </RoomButtonJoinContent>
+                                </RoomViewButton>
+                              </RoomButtons>
+                            )
+                          ) : (
+                            "No winner!"
+                          )
+                        ) : item.creator && item.visitor ? (
+                          currentAcc === item.visitor ||
+                          currentAcc === item.creator ? (
+                            currentAcc === item.visitor ? (
+                              item.visitorReady ? (
+                                <RoomButtons>
+                                  <StatusView>
+                                    <StatusImg src={mark1} />
+                                    {item.creatorReady ? (
+                                      <AiOutlineCheckCircle
+                                        size={30}
+                                        color="#4cd964"
+                                      />
+                                    ) : (
+                                      <AiOutlineCloseCircle
+                                        size={30}
+                                        color="#ff2d55 "
+                                      />
+                                    )}
+                                  </StatusView>
+                                  <StatusView>
+                                    <StatusImg src={mark2} />
+                                    {item.visitorReady ? (
+                                      <AiOutlineCheckCircle
+                                        size={30}
+                                        color="#4cd964"
+                                      />
+                                    ) : (
+                                      <AiOutlineCloseCircle
+                                        size={30}
+                                        color="#ff2d55 "
+                                      />
+                                    )}
+                                  </StatusView>
+                                  <RoomApproveButton disabled>
+                                    <RoomButtonJoinContent>
+                                      Approved
+                                    </RoomButtonJoinContent>
+                                  </RoomApproveButton>
+                                </RoomButtons>
+                              ) : (
+                                <RoomButtons onClick={() => onReady(item)}>
+                                  <StatusView>
+                                    <StatusImg src={mark1} />
+                                    {item.creatorReady ? (
+                                      <AiOutlineCheckCircle
+                                        size={30}
+                                        color="#4cd964"
+                                      />
+                                    ) : (
+                                      <AiOutlineCloseCircle
+                                        size={30}
+                                        color="#ff2d55 "
+                                      />
+                                    )}
+                                  </StatusView>
+                                  <StatusView>
+                                    <StatusImg src={mark2} />
+                                    {item.visitorReady ? (
+                                      <AiOutlineCheckCircle
+                                        size={30}
+                                        color="#4cd964"
+                                      />
+                                    ) : (
+                                      <AiOutlineCloseCircle
+                                        size={30}
+                                        color="#ff2d55 "
+                                      />
+                                    )}
+                                  </StatusView>
+                                  <RoomStartButton>
+                                    <RoomButtonJoinContent>
+                                      Ready
+                                    </RoomButtonJoinContent>
+                                  </RoomStartButton>
+                                </RoomButtons>
+                              )
+                            ) : currentAcc === item.creator ? (
+                              item.creatorReady ? (
+                                <RoomButtons>
+                                  <StatusView>
+                                    <StatusImg src={mark1} />
+                                    {item.creatorReady ? (
+                                      <AiOutlineCheckCircle
+                                        size={30}
+                                        color="#4cd964"
+                                      />
+                                    ) : (
+                                      <AiOutlineCloseCircle
+                                        size={30}
+                                        color="#ff2d55 "
+                                      />
+                                    )}
+                                  </StatusView>
+                                  <StatusView>
+                                    <StatusImg src={mark2} />
+                                    {item.visitorReady ? (
+                                      <AiOutlineCheckCircle
+                                        size={30}
+                                        color="#4cd964"
+                                      />
+                                    ) : (
+                                      <AiOutlineCloseCircle
+                                        size={30}
+                                        color="#ff2d55 "
+                                      />
+                                    )}
+                                  </StatusView>
+                                  <RoomApproveButton disabled>
+                                    <RoomButtonJoinContent>
+                                      Approved
+                                    </RoomButtonJoinContent>
+                                  </RoomApproveButton>
+                                </RoomButtons>
+                              ) : (
+                                <RoomButtons onClick={() => onReady(item)}>
+                                  <StatusView>
+                                    <StatusImg src={mark1} />
+                                    {item.creatorReady ? (
+                                      <AiOutlineCheckCircle
+                                        size={30}
+                                        color="#4cd964"
+                                      />
+                                    ) : (
+                                      <AiOutlineCloseCircle
+                                        size={30}
+                                        color="#ff2d55 "
+                                      />
+                                    )}
+                                  </StatusView>
+                                  <StatusView>
+                                    <StatusImg src={mark2} />
+                                    {item.visitorReady ? (
+                                      <AiOutlineCheckCircle
+                                        size={30}
+                                        color="#4cd964"
+                                      />
+                                    ) : (
+                                      <AiOutlineCloseCircle
+                                        size={30}
+                                        color="#ff2d55 "
+                                      />
+                                    )}
+                                  </StatusView>
+                                  <RoomStartButton>
+                                    <RoomButtonJoinContent>
+                                      Ready
+                                    </RoomButtonJoinContent>
+                                  </RoomStartButton>
+                                </RoomButtons>
+                              )
+                            ) : (
+                              "You are not connected"
+                            )
                           ) : (
                             <RoomButtons>
                               <RoomViewButton>
@@ -452,200 +624,34 @@ const Dashboard = () => {
                               </RoomViewButton>
                             </RoomButtons>
                           )
-                        ) : (
-                          "No winner!"
-                        )
-                      ) : item.creator && item.visitor ? (
-                        currentAcc === item.visitor ||
-                        currentAcc === item.creator ? (
-                          currentAcc === item.visitor ? (
-                            item.visitorReady ? (
-                              <RoomButtons>
-                                <StatusView>
-                                  <StatusImg src={mark1} />
-                                  {item.creatorReady ? (
-                                    <AiOutlineCheckCircle
-                                      size={30}
-                                      color="#4cd964"
-                                    />
-                                  ) : (
-                                    <AiOutlineCloseCircle
-                                      size={30}
-                                      color="#ff2d55 "
-                                    />
-                                  )}
-                                </StatusView>
-                                <StatusView>
-                                  <StatusImg src={mark2} />
-                                  {item.visitorReady ? (
-                                    <AiOutlineCheckCircle
-                                      size={30}
-                                      color="#4cd964"
-                                    />
-                                  ) : (
-                                    <AiOutlineCloseCircle
-                                      size={30}
-                                      color="#ff2d55 "
-                                    />
-                                  )}
-                                </StatusView>
-                                <RoomApproveButton disabled>
-                                  <RoomButtonJoinContent>
-                                    Approved
-                                  </RoomButtonJoinContent>
-                                </RoomApproveButton>
-                              </RoomButtons>
-                            ) : (
-                              <RoomButtons onClick={() => onReady(item)}>
-                                <StatusView>
-                                  <StatusImg src={mark1} />
-                                  {item.creatorReady ? (
-                                    <AiOutlineCheckCircle
-                                      size={30}
-                                      color="#4cd964"
-                                    />
-                                  ) : (
-                                    <AiOutlineCloseCircle
-                                      size={30}
-                                      color="#ff2d55 "
-                                    />
-                                  )}
-                                </StatusView>
-                                <StatusView>
-                                  <StatusImg src={mark2} />
-                                  {item.visitorReady ? (
-                                    <AiOutlineCheckCircle
-                                      size={30}
-                                      color="#4cd964"
-                                    />
-                                  ) : (
-                                    <AiOutlineCloseCircle
-                                      size={30}
-                                      color="#ff2d55 "
-                                    />
-                                  )}
-                                </StatusView>
-                                <RoomStartButton>
-                                  <RoomButtonJoinContent>
-                                    Ready
-                                  </RoomButtonJoinContent>
-                                </RoomStartButton>
-                              </RoomButtons>
-                            )
-                          ) : currentAcc === item.creator ? (
-                            item.creatorReady ? (
-                              <RoomButtons>
-                                <StatusView>
-                                  <StatusImg src={mark1} />
-                                  {item.creatorReady ? (
-                                    <AiOutlineCheckCircle
-                                      size={30}
-                                      color="#4cd964"
-                                    />
-                                  ) : (
-                                    <AiOutlineCloseCircle
-                                      size={30}
-                                      color="#ff2d55 "
-                                    />
-                                  )}
-                                </StatusView>
-                                <StatusView>
-                                  <StatusImg src={mark2} />
-                                  {item.visitorReady ? (
-                                    <AiOutlineCheckCircle
-                                      size={30}
-                                      color="#4cd964"
-                                    />
-                                  ) : (
-                                    <AiOutlineCloseCircle
-                                      size={30}
-                                      color="#ff2d55 "
-                                    />
-                                  )}
-                                </StatusView>
-                                <RoomApproveButton disabled>
-                                  <RoomButtonJoinContent>
-                                    Approved
-                                  </RoomButtonJoinContent>
-                                </RoomApproveButton>
-                              </RoomButtons>
-                            ) : (
-                              <RoomButtons onClick={() => onReady(item)}>
-                                <StatusView>
-                                  <StatusImg src={mark1} />
-                                  {item.creatorReady ? (
-                                    <AiOutlineCheckCircle
-                                      size={30}
-                                      color="#4cd964"
-                                    />
-                                  ) : (
-                                    <AiOutlineCloseCircle
-                                      size={30}
-                                      color="#ff2d55 "
-                                    />
-                                  )}
-                                </StatusView>
-                                <StatusView>
-                                  <StatusImg src={mark2} />
-                                  {item.visitorReady ? (
-                                    <AiOutlineCheckCircle
-                                      size={30}
-                                      color="#4cd964"
-                                    />
-                                  ) : (
-                                    <AiOutlineCloseCircle
-                                      size={30}
-                                      color="#ff2d55 "
-                                    />
-                                  )}
-                                </StatusView>
-                                <RoomStartButton>
-                                  <RoomButtonJoinContent>
-                                    Ready
-                                  </RoomButtonJoinContent>
-                                </RoomStartButton>
-                              </RoomButtons>
-                            )
+                        ) : item.creator && !item.visitor ? (
+                          item.creator === currentAcc ? (
+                            <RoomButtons>
+                              <RoomWaitButton>
+                                <RoomButtonJoinContent>
+                                  Wait
+                                </RoomButtonJoinContent>
+                              </RoomWaitButton>
+                            </RoomButtons>
                           ) : (
-                            "You are not connected"
+                            <RoomButtons
+                              onClick={() => {
+                                handleJoin(item);
+                              }}
+                            >
+                              <RoomJoinButton>
+                                <RoomButtonJoinContent>
+                                  Join
+                                </RoomButtonJoinContent>
+                              </RoomJoinButton>
+                            </RoomButtons>
                           )
                         ) : (
-                          <RoomButtons>
-                            <RoomViewButton>
-                              <RoomButtonJoinContent>
-                                View
-                              </RoomButtonJoinContent>
-                            </RoomViewButton>
-                          </RoomButtons>
-                        )
-                      ) : item.creator && !item.visitor ? (
-                        item.creator === currentAcc ? (
-                          <RoomButtons>
-                            <RoomWaitButton>
-                              <RoomButtonJoinContent>
-                                Wait
-                              </RoomButtonJoinContent>
-                            </RoomWaitButton>
-                          </RoomButtons>
-                        ) : (
-                          <RoomButtons
-                            onClick={() => {
-                              handleJoin(item);
-                            }}
-                          >
-                            <RoomJoinButton>
-                              <RoomButtonJoinContent>
-                                Join
-                              </RoomButtonJoinContent>
-                            </RoomJoinButton>
-                          </RoomButtons>
-                        )
-                      ) : (
-                        ""
-                      )}
-                    </StyledRoom>
-                  );
-                })}
+                          ""
+                        )}
+                      </StyledRoom>
+                    );
+                  })}
               </CreateView>
             </>
           ) : (

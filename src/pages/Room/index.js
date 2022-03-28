@@ -80,6 +80,9 @@ const Dashboard = () => {
       socket.on("winner_success", (item) => {
         getRoomData();
       });
+      socket.on("cancel_success", (item) => {
+        getRoomData();
+      });
     }
   }, [socket]);
   const getCollectionData = async () => {
